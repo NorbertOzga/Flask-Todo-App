@@ -11,11 +11,13 @@ def task():
         pass
 
 
-@bp.route('/task/<int:id>', methods=['GET', 'DELETE'])
+@bp.route('/task/<int:id>', methods=['GET', 'DELETE', 'PATCH'])
 def task_id():
     if request.method == 'GET':
         pass
     elif request.method == 'DELETE':
+        pass
+    elif request.method == 'PATH':
         pass
 
 
