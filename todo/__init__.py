@@ -1,9 +1,12 @@
 from flask import Flask
 from flask_cors import CORS
 
+from ..config import ProdConfig, Config
 
-def create_app():
+
+def create_app(config: Config = ProdConfig):
     app = Flask(__name__)
+    app.config.from_object(config)
 
     CORS(app)
 
