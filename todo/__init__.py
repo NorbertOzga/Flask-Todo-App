@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 
-from .extension import migrate, db, ma
+from .extension import migrate, database, marshmallow
 from ..config import ProdConfig, Config
 
 
@@ -23,6 +23,6 @@ def register_blueprints(app):
 
 
 def register_extensions(app):
-    db.init_app(app)
-    migrate.init_app(app, db)
-    ma.init_app(app)
+    database.init_app(app)
+    migrate.init_app(app, database)
+    marshmallow.init_app(app)
