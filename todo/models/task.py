@@ -1,6 +1,8 @@
 from marshmallow import fields
 
 from todo import database, marshmallow
+from todo.validators.common import cannot_be_empty
+from todo.validators.task import is_in_allowed_priority_range
 
 
 class Task(database.Model):
@@ -15,15 +17,17 @@ class Task(database.Model):
                               nullable=False)
     title = database.Column(database.String, nullable=False)
     description = database.Column(database.String, nullable=True)
+    priority = database.Column(database.Integer, nullable=False)
     add_time = database.Column(database.DateTime, nullable=False)
 
 
 class TaskSchema(marshmallow.Schema):
     id = fields.Integer(dump_only=True)
-    user_id = fields.Integer()
-    title = fields.String()
+    user_id = fields.Integer(validate=[cannot_be_empty])
+    title = fields.String(validate=[cannot_be_empty])
     description = fields.String()
-    add_time = fields.DateTime()
+    priority = fields.Integer(validate=[is_in_allowed_priority_range])
+    add_time = fields.DateTime(validate=[cannot_be_empty])
 
 
 task_schema = TaskSchema()
