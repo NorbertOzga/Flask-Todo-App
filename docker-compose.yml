@@ -4,9 +4,19 @@ services:
     build: .
     ports:
       - "5000:5000"
+    env_file: .env.debug
     environment:
       - FLASK_APP=run.py
       - FLASK_DEBUG=1
+      - POSTGRES_HOST=database
     volumes:
       - .:/app
     command: flask run --host=0.0.0.0
+    depends_on:
+      - database
+  database:
+    image: postgres:10
+    env_file: .env.debug
+    expose:
+      - 5432
+
