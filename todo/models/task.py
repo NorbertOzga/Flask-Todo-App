@@ -1,6 +1,6 @@
 from marshmallow import fields
 
-from todo import database, marshmallow
+from todo.extension import database, marshmallow
 from todo.validators.common import cannot_be_empty
 from todo.validators.task import is_in_allowed_priority_range
 
