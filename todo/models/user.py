@@ -5,6 +5,8 @@ from todo.validators.common import cannot_be_empty
 
 
 class User(database.Model):
+    __tablename__ = 'users'
+
     id = database.Column(database.Integer, primary_key=True)
     name = database.Column(database.String(50), nullable=False)
     email = database.Column(database.String(50), nullable=False)
