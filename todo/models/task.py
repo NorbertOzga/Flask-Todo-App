@@ -28,6 +28,7 @@ class TaskSchema(marshmallow.Schema):
     description = fields.String()
     priority = fields.Integer(validate=[is_in_allowed_priority_range])
     add_time = fields.DateTime(validate=[cannot_be_empty])
+    active = fields.Boolean(default=True)
 
 
 task_schema = TaskSchema()
