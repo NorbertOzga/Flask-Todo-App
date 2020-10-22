@@ -25,6 +25,9 @@ def create_app(config_object: Config = ProdConfig) -> Flask:
 
     app.app_context().push()
 
+    from todo.models.user import User
+    from todo.models.task import Task
+
     return app
 
 
