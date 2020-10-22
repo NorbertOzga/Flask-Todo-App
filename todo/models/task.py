@@ -19,6 +19,7 @@ class Task(database.Model):
     description = database.Column(database.String, nullable=True)
     priority = database.Column(database.Integer, nullable=False)
     add_time = database.Column(database.DateTime, nullable=False)
+    active = database.Column(database.Boolean, default=True)
 
 
 class TaskSchema(marshmallow.Schema):
@@ -27,7 +28,7 @@ class TaskSchema(marshmallow.Schema):
     title = fields.String(validate=[cannot_be_empty])
     description = fields.String()
     priority = fields.Integer(validate=[is_in_allowed_priority_range])
-    add_time = fields.DateTime(validate=[cannot_be_empty])
+    add_time = fields.DateTime(dump_only=True)
     active = fields.Boolean(default=True)
 
 
