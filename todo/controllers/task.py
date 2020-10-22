@@ -74,7 +74,3 @@ def delete_task(task_id: int) -> tp.Tuple[tp.Dict, int]:
                 HttpStatus.INTERNAL_SERVER_ERROR)
 
     return {"status": "success", "data": None}, HttpStatus.OK
-
-
-def update_task(task_id: int, json_data) -> tp.Tuple[tp.Dict, int]:
-    raise NotImplemented()
