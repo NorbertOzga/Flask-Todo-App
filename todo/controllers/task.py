@@ -19,7 +19,7 @@ def get_active_tasks_for_user(user_id: int) -> tp.Tuple[tp.Dict, int]:
     tasks = Task.query.filter(Task.user_id == user_id, Task.active is True)
     if tasks.count() == 0:
         return ({"status": "success", "data": None},
-                HttpStatus.BAD_REQUEST)
+                HttpStatus.OK)
 
     return ({"status": "success", "data": tasks_schema.dump(tasks)},
             HttpStatus.OK)
@@ -29,7 +29,7 @@ def get_all_tasks_for_user(user_id: int) -> tp.Tuple[tp.Dict, int]:
     tasks = Task.query.filter(Task.user_id == user_id)
     if tasks.count() == 0:
         return ({"status": "success", "data": None},
-                HttpStatus.BAD_REQUEST)
+                HttpStatus.OK)
 
     return ({"status": "success", "data": task_schema.dump(tasks)},
             HttpStatus.OK)
