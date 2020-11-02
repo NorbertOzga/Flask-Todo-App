@@ -9,7 +9,7 @@ class User(database.Model):
 
     id = database.Column(database.Integer, primary_key=True)
     name = database.Column(database.String(50), nullable=False)
-    email = database.Column(database.String(50), nullable=False)
+    email = database.Column(database.String(50), nullable=False, unique=True)
     password = database.Column(database.String(100), nullable=False)
 
 
@@ -17,7 +17,7 @@ class UserSchema(marshmallow.Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String(validate=[cannot_be_empty])
     email = fields.String(validate=[cannot_be_empty])
-    password = fields.String(validate=[cannot_be_empty])
+    password = fields.String(validate=[cannot_be_empty], load_only=True)
 
 
 user_schema = UserSchema()

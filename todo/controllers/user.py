@@ -2,6 +2,7 @@ import typing as tp
 
 from sqlalchemy import exc
 from marshmallow import ValidationError
+from flask_bcrypt import generate_password_hash
 
 from todo.extension import database
 from todo.http_statuses import HttpStatus
@@ -25,6 +26,7 @@ def create_user(json_data) -> tp.Tuple[tp.Dict, int]:
                 HttpStatus.UNPROCESSABLE_ENTITY)
 
     new_user = User(**data)
+    new_user.password = generate_password_hash(new_user.password)
     database.session.add(new_user)
 
     try:
