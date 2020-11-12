@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 
 from .routes import bp as routes_bp
-from .extension import migrate, database, marshmallow
+from .extension import migrate, database, marshmallow, jwt
 from todo.config import ProdConfig, Config
 
 
@@ -55,3 +55,4 @@ def register_extensions(app: Flask) -> None:
     database.init_app(app)
     migrate.init_app(app, database)
     marshmallow.init_app(app)
+    jwt.init_app(app)

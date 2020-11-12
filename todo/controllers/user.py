@@ -2,7 +2,8 @@ import typing as tp
 
 from sqlalchemy import exc
 from marshmallow import ValidationError
-from flask_bcrypt import generate_password_hash
+from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token
 
 from todo.extension import database
 from todo.http_statuses import HttpStatus
@@ -37,6 +38,38 @@ def create_user(json_data) -> tp.Tuple[tp.Dict, int]:
 
     return ({"status": "success", "data": user_schema.dump(new_user)},
             HttpStatus.CREATED)
+
+
+def login_user(json_data):
+    if not json_data:
+        return ({"status": "fail", "data": "No data provided"},
+                HttpStatus.BAD_REQUEST)
+
+    email = json_data["email"]
+    password = json_data["password"]
+
+    if not email:
+        return ({"status": "fail", "data": "No email provided"},
+                HttpStatus.BAD_REQUEST)
+    if not password:
+        return ({"status": "fail", "data": "No password provided"},
+                HttpStatus.BAD_REQUEST)
+
+    user = User.query.filter(User.email == email)
+
+    if user.count() == 0:
+        return ({"status": "fail", "data": "No user with provided email"},
+                HttpStatus.BAD_REQUEST)
+
+    if check_password_hash(user.password, password):
+        return ({
+                    "status": "success",
+                    "data": create_access_token(identity=email)
+                },
+                HttpStatus.OK)
+
+    return ({"status": "fail", "data": "Bad password"},
+            HttpStatus.BAD_REQUEST)
 
 
 def delete_user(user_id: int) -> tp.Tuple[tp.Dict, int]:
