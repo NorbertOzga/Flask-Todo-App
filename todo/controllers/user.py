@@ -27,7 +27,7 @@ def create_user(json_data) -> tp.Tuple[tp.Dict, int]:
                 HttpStatus.UNPROCESSABLE_ENTITY)
 
     new_user = User(**data)
-    new_user.password = generate_password_hash(new_user.password)
+    new_user.password = generate_password_hash(new_user.password).decode('utf-8')
     database.session.add(new_user)
 
     try:
@@ -61,7 +61,7 @@ def login_user(json_data):
         return ({"status": "fail", "data": "No user with provided email"},
                 HttpStatus.BAD_REQUEST)
 
-    if check_password_hash(user.password, password):
+    if check_password_hash(user[0].password, password):
         return ({
                     "status": "success",
                     "data": create_access_token(identity=email)

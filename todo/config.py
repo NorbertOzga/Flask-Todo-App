@@ -13,6 +13,7 @@ def get_database_connection_uri():
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = get_database_connection_uri()
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', '')
 
 
 class ProdConfig(Config):
